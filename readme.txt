@@ -1,0 +1,13 @@
+This shell is an implementation of the following programming exercise:
+
+Implement the following built-in commands.
+exit: users can exit from the shell with the exit command. cd: cd is a command to change directories. You will need to invoke the chdir system call. path: path is a command not only to show the current pathname list, but also to append or remove several pathnames. In your shell implementation, you may keep an variable or data structure to deal with pathname list (referred to as "path" variable below). This list helps searching for executables when users enter specific commands.
+path(without arguments) displays the pathnames currently set. It should show pathnames separated by colons. ex) "/bin:/usr/bin" path+/foo/bar appends the pathname to the "path" variable. Only one pathname will be given to each invocation of the pathcommand. It's okay to add a pathname to the "path" variable even if it already contains the same pathname, i.e., duplicates in the "path" variable are fine.
+path-/foo/bar removes the pathname from the "path" variable. It should remove all duplicates of the given pathname. Only one pathname will be given to each invocation of the path command.
+Extend your shell with I/O redirection (<, >, and 2>).
+You'll need the open, close, and dup2system calls and understand Unix file descriptors. stdin maps to file descriptor 0, stdout to 1, and stderr to 2. You should handle cases when all three streams are redirected, such as cmd < in.txt > out.txt 2>err.txt(not necessarily in this order). Assume that there isn't any space in the stderr redirection operator "2>". You don't need to handle I/O redirection for built-in commands (cd,exit,path) or other forms of redirections. For example, you don't need to handle: cmd 1> filename(another way to redirect standard output)), cmd 2>&1(redirect standard error to standard output).
+Extend your shell with pipeline (|), as described above.
+You'll need the pipe system call. There is no restriction on the depth of a pipeline. That is, your solution should handle arbitrary number of commands chained together with operator | You should handle combinations of redirection and pipeline when they can be combined. An example is:sort<file.txt|uniq. However, if there is a conflict between redirection and pipeline, i.e. one file descriptor gets associated with two things, you should report a syntax error. 
+An e x a m p l e i s : ls > 1.txt | grep FOO; 
+w e c a n n o t r e d i r e c t t h e s t d o u t o f ls t o b o t h 1.txt a n d grep a t the same time.
+ You do not need to handle built-in commands (cd,exit,path) in the pipeline. Your shell should not accept new user commands while the pipeline is still running.
